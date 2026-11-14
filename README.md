@@ -1,2 +1,56 @@
-# Schachspiel
-Pinkes Schachspiel
+# Pink Chess
+
+**Jetzt spielen:** https://pink-chess-b25c485.gzc5d56pbf.chatgpt.site/
+
+Veröffentlicht am 14. November 2026. Einladung, Zugwechsel und Synchronisierung sind serverseitig getestet.
+
+Ein pinkes Schachspiel für Handy und Browser: gegen Ben mit drei Schwierigkeitsstufen, online per Einladungslink oder lokal zu zweit. Enthält das pink-weiß karierte App-Icon, eine Installationshilfe, ein Web-App-Manifest und eine Offline-Hinweisseite.
+
+## Starten
+
+Empfohlen: Node.js 24 oder neuer.
+
+```sh
+npm ci
+npm run build
+npm run start:node
+```
+
+Öffne danach die angezeigte Adresse (standardmäßig http://localhost:3000). Auf dem eigenen Rechner ist das eine lokale Vorschau; Freunde auf anderen Geräten benötigen eine erreichbare Hosting-Adresse.
+
+## Hosting
+
+Zwei Serverformate sind vorbereitet:
+
+- **Sites / Cloudflare:** Ein einzelner Worker in `dist/server/index.js`, statische Dateien in `dist/client`, D1-Migrationen in `drizzle`. Der Sites-Build und seine Konfiguration sind erhalten.
+- **Node-Hosting:** `npm run start:node`, Gesundheitsprüfung unter `/healthz`. `PORT` wählt den Serverport. `DATA_DIR` muss bei dauerhaftem Hosting auf ein persistentes Datenverzeichnis zeigen; dort liegt `pink-chess.sqlite`. Ohne persistentes Datenverzeichnis können Online-Partien bei einem Neustart des Hosting-Dienstes verloren gehen. SQLite-Migrationen werden beim Serverstart einmalig angewendet.
+
+Die Web-App wird mit ihrem gemeinsamen Partienspeicher auf Sites / Cloudflare veröffentlicht. GitHub enthält den vollständigen Quellcode; GitHub Pages allein kann die Online-API nicht ausführen.
+
+## Auf dem Handy
+
+Nach erfolgreichem HTTPS-Hosting die Spieladresse in Safari oder Chrome öffnen. Der Knopf „Aufs Handy“ erklärt das Hinzufügen auf den Startbildschirm. Wo der Browser eine direkte Installation unterstützt, zeigt das Spiel „App installieren“ an. Die Installation selbst bestätigt der Nutzer im Browser.
+
+Ben und Online-Partien benötigen Internet. Der Service Worker speichert keine Spiel-APIs oder privaten Spielstände zwischen. Browserdaten enthalten die Spielerzugänge; nach dem Löschen dieser Daten ist der Zugang zur Online-Partie verloren. Einladungen und Partien sind sieben Tage gültig.
+
+## Prüfen
+
+```sh
+node --experimental-strip-types tests/game-api.mjs
+node --import ./scripts/sites-env.mjs tests/worker-runtime.mjs
+node tests/node-hosting.mjs
+node node_modules/typescript/bin/tsc --noEmit
+```
+
+Die Tests prüfen Schachregeln, Zugrechte, gleichzeitige Beitritte, Versionskonflikte, Schachmatt, Ablauf, persistente Online-Abläufe, den tatsächlich gebauten Worker sowie den alternativen Node-Server. TypeScript-Prüfung, API-Tests, Worker-Tests und Node-Hosting-Tests werden vor der Veröffentlichung ausgeführt. Die verwaltete Browser-Vorschau ist in dieser Umgebung nicht erreichbar; der Installationsdialog auf einem echten Handy bleibt ungeprüft.
+
+## Freunde einladen
+
+1. In der App „Mit Freunden“ wählen.
+2. „Freunde einladen“ anklicken.
+3. Den Einladungslink kopieren oder über „Einladung teilen“ weitergeben.
+4. Die zweite Person öffnet den Link auf ihrem eigenen Gerät und spielt Schwarz.
+
+Die Spieloberfläche ist per Link erreichbar. Jede Partie ist nur mit ihrem zufälligen Einladungslink zugänglich. Nach dem Beitritt ist der zweite Platz belegt; geheime Spielerzugänge liegen im Browser und nur als Hash im Partienspeicher. Die Züge werden serverseitig geprüft und automatisch synchronisiert. Einladungen und Partien laufen nach sieben Tagen ab.
+
+Das App-Icon zeigt eine pinke Dame vor einem weiß-rosa Schachbrett. Es ist als Favicon und in den Größen für iPhone-Home-Bildschirm und Android-Installation eingebunden.

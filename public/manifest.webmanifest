@@ -1,0 +1,17 @@
+{
+  "id": "/",
+  "name": "Pink Chess",
+  "short_name": "Pink Chess",
+  "description": "Dein pinkes Schachspiel mit Ben und deinen Freunden.",
+  "lang": "de",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fff7fa",
+  "theme_color": "#d42b79",
+  "icons": [
+    {"src": "/icons/pink-chess-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "/icons/pink-chess-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"}
+  ],
+  "categories": ["games"]
+}
