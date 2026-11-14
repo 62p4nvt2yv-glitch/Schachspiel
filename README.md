@@ -58,3 +58,11 @@ Die App öffnet mit einer Modusauswahl. Ben, Online-Einladungen und das Spiel zu
 Das Brett verwendet weiße und rosa Felder, einen plastischen Rand und glänzende SVG-Figuren in hellem Rosé (Weiß) und kräftigem Pink (Schwarz). Auf schmalen Displays stehen Spielstatus und Brett oben; Einstellungen und Zugliste folgen darunter. Bedienelemente sind für Touch ausgelegt, Eingabefelder verhindern den iOS-Fokuszoom durch eine Schriftgröße von mindestens 16px. Safe Areas, dynamische Bildschirmhöhe und Querformat werden berücksichtigt.
 
 In Safari über „Teilen → Zum Home-Bildschirm“ installieren. Das Apple-Touch-Icon mit der pinken Dame und dem weiß-rosa Schachbrett bleibt eingebunden. JavaScript und CSS tragen Versionskennungen, damit Updates auch bei vorherigem Browserbesuch geladen werden.
+
+## Züge und Bewegung
+
+Die Oberfläche bezeichnet die Seiten als Rosé und Pink. Der Spielverlauf zeigt beide Seiten mit Notation sowie Start- und Zielfeld und scrollt zum neuesten Zug. Der letzte gegnerische Zug erscheint zusätzlich am Brett und als Richtungspfeil.
+
+Neue Spielzüge gleiten 620 Millisekunden über das Brett, mit leicht erhöhter Figur und mitbewegtem Schatten. Beide Figuren einer Rochade bewegen sich gleichzeitig; geschlagene Figuren blenden aus. Nach einer Bauernumwandlung erscheint die gewählte Figur am Ziel. Rücknahme, Spielwechsel und wiederhergestellte Partien werden nicht als neue Züge animiert. Die Systemoption für reduzierte Bewegung wird berücksichtigt.
+
+Die Bewegungslogik wird mit `node --experimental-strip-types tests/board-motion.mjs` geprüft.
