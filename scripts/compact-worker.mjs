@@ -1,6 +1,7 @@
 // Keep the maintained Sites/Vinext build, then package this client-only game
 // with a self-contained API Worker instead of a multi-module SSR runtime.
 import {build} from 'esbuild';
+import {createHash} from 'node:crypto';
 import {mkdir,writeFile,readFile,rm,cp} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 import path from 'node:path';
@@ -9,7 +10,8 @@ await build({stdin:{contents:"import {renderToString} from 'react-dom/server';im
 const snapshot=(await import(pathToFileURL(path.join(root,'work/ssr-snapshot.mjs')).href+'?t='+Date.now())).default;
 await rm('dist/client',{recursive:true,force:true});await mkdir('dist/client',{recursive:true});await cp('public','dist/client',{recursive:true});
 await build({entryPoints:['app/browser-entry.tsx'],outfile:'dist/client/pink-app.js',bundle:true,minify:true,format:'esm',platform:'browser',target:['safari16','chrome110'],jsx:'automatic',define:{'process.env.NODE_ENV':'"production"'},legalComments:'eof'});
-const html='<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#d42b79"><meta name="description" content="Dein pinkes Schachspiel. Spiele gegen Ben, mit Freunden online oder zu zweit."><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Pink Chess"><meta name="apple-mobile-web-app-status-bar-style" content="default"><title>Pink Chess · Dein nächster Lieblingszug</title><link rel="manifest" href="/manifest.webmanifest"><link rel="icon" type="image/png" href="/icons/pink-chess-32.png"><link rel="apple-touch-icon" href="/icons/pink-chess-180.png"><link rel="stylesheet" href="/pink-app.css"></head><body><div id="pink-root">'+snapshot+'</div><script type="module" src="/pink-app.js"></script></body></html>';
+const version=createHash('sha256').update(await readFile('dist/client/pink-app.js')).update(await readFile('dist/client/pink-app.css')).digest('hex').slice(0,12);
+const html='<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#d42b79"><meta name="description" content="Dein pinkes Schachspiel. Spiele gegen Ben, mit Freunden online oder zu zweit."><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Pink Chess"><meta name="apple-mobile-web-app-status-bar-style" content="default"><title>Pink Chess · Dein nächster Lieblingszug</title><link rel="manifest" href="/manifest.webmanifest"><link rel="icon" type="image/png" href="/icons/pink-chess-32.png"><link rel="apple-touch-icon" href="/icons/pink-chess-180.png"><link rel="stylesheet" href="/pink-app.css?v='+version+'"></head><body><div id="pink-root">'+snapshot+'</div><script type="module" src="/pink-app.js?v='+version+'"></script></body></html>';
 await writeFile('dist/client/index.html',html);await writeFile('work/portable-index.html',html);
 const previous=JSON.parse(await readFile('dist/server/wrangler.json','utf8'));
 await rm('dist/server',{recursive:true,force:true});await mkdir('dist/server',{recursive:true});

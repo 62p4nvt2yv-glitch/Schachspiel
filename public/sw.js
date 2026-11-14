@@ -1,4 +1,4 @@
-const CACHE = 'pink-chess-static-v1';
+const CACHE = 'pink-chess-static-v2';
 const OFFLINE = '/offline.html';
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll([OFFLINE, '/icons/pink-chess-192.png'])).then(() => self.skipWaiting()));

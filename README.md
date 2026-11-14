@@ -1,9 +1,5 @@
 # Pink Chess
 
-**Jetzt spielen:** https://pink-chess-b25c485.gzc5d56pbf.chatgpt.site/
-
-Veröffentlicht am 14. November 2026. Einladung, Zugwechsel und Synchronisierung sind serverseitig getestet.
-
 Ein pinkes Schachspiel für Handy und Browser: gegen Ben mit drei Schwierigkeitsstufen, online per Einladungslink oder lokal zu zweit. Enthält das pink-weiß karierte App-Icon, eine Installationshilfe, ein Web-App-Manifest und eine Offline-Hinweisseite.
 
 ## Starten
@@ -54,3 +50,11 @@ Die Tests prüfen Schachregeln, Zugrechte, gleichzeitige Beitritte, Versionskonf
 Die Spieloberfläche ist per Link erreichbar. Jede Partie ist nur mit ihrem zufälligen Einladungslink zugänglich. Nach dem Beitritt ist der zweite Platz belegt; geheime Spielerzugänge liegen im Browser und nur als Hash im Partienspeicher. Die Züge werden serverseitig geprüft und automatisch synchronisiert. Einladungen und Partien laufen nach sieben Tagen ab.
 
 Das App-Icon zeigt eine pinke Dame vor einem weiß-rosa Schachbrett. Es ist als Favicon und in den Größen für iPhone-Home-Bildschirm und Android-Installation eingebunden.
+
+## iPhone-Oberfläche
+
+Die App öffnet mit einer Modusauswahl. Ben, Online-Einladungen und das Spiel zu zweit sind von dort erreichbar. „Modi“ führt zurück; eine laufende Partie lässt sich fortsetzen. Ben und lokale Partien haben getrennte Browser-Spielstände. Einladungslinks öffnen unmittelbar die Online-Partie.
+
+Das Brett verwendet weiße und rosa Felder, einen plastischen Rand und glänzende SVG-Figuren in hellem Rosé (Weiß) und kräftigem Pink (Schwarz). Auf schmalen Displays stehen Spielstatus und Brett oben; Einstellungen und Zugliste folgen darunter. Bedienelemente sind für Touch ausgelegt, Eingabefelder verhindern den iOS-Fokuszoom durch eine Schriftgröße von mindestens 16px. Safe Areas, dynamische Bildschirmhöhe und Querformat werden berücksichtigt.
+
+In Safari über „Teilen → Zum Home-Bildschirm“ installieren. Das Apple-Touch-Icon mit der pinken Dame und dem weiß-rosa Schachbrett bleibt eingebunden. JavaScript und CSS tragen Versionskennungen, damit Updates auch bei vorherigem Browserbesuch geladen werden.
